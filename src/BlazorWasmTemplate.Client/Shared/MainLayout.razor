@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+
+<AuthorizeView>
+    <Authorized>
+        <Header />
+        <Sidebar />
+        <div id="main" class="main">
+            @Body
+        </div>
+        <Footer />
+    </Authorized>
+    <NotAuthorized>
+        <main>
+            <div class="container">
+                @Body
+            </div>
+        </main>
+    </NotAuthorized>
+</AuthorizeView>
+
+<BlazoredToasts Position="ToastPosition.BottomRight"
+                Timeout="5"
+                IconType="IconType.FontAwesome"
+                SuccessIcon="fa fa-thumbs-up"
+                ErrorIcon="fa fa-bug"
+                InfoIcon="fa fa-info"
+                WarningIcon="fa fa-exclamation-triangle"
+                ShowProgressBar="@true" />

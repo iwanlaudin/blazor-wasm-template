@@ -1,0 +1,23 @@
+﻿<div>
+    <form class="row g-1 justify-content-md-end" @onsubmit="HandleSearch">
+        <div class="col-auto">
+            <input type="text" @bind="searchTerm" class="form-control form-control-sm" id="search" placeholder="Search" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-info btn-sm">
+                <i class="bi bi-search text-white me-1"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+@code {
+    private string? searchTerm { get; set; }
+
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+
+    private async Task HandleSearch()
+    {
+        await OnSearch.InvokeAsync(searchTerm);
+    }
+}

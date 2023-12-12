@@ -1,0 +1,17 @@
+﻿<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <NavLink class='@GetNavLinkClass("dashboard")' href="/" @onclick='(() => ToggleCollapse("dashboard"))' Match="NavLinkMatch.All">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </NavLink>
+        </li>
+
+        <li class="nav-item">
+            <NavLink class='@GetNavLinkClass("users")' href="/users" @onclick='(() => ToggleCollapse("users"))'>
+                <i class="bi bi-people"></i>
+                <span>User Management</span>
+            </NavLink>
+        </li>
+    </ul>
+</aside>

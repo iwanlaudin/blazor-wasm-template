@@ -1,0 +1,95 @@
+﻿@page "/users"
+
+@attribute [Authorize]
+
+<PageTitle>WMS - User List</PageTitle>
+
+<Breadcrumbs Title="User Management"
+             BreadcrumbItems="@(new List<BreadcrumbItem>
+             {
+                new("User Management", "", false),
+                new("User", "", false)
+             })" />
+
+<Section>
+    <div class="d-grid d-md-flex my-3 justify-content-md-end">
+        <a class="btn btn-primary btn-sm" href="/users/create" role="button">
+            <i class="bi bi-plus-circle text-white me-1"></i> Add User
+        </a>
+    </div>
+
+    <hr />
+
+    <Search OnSearch="OnSearch" />
+
+    <hr />
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(!isLoading)
+                {
+                    @if (users is not null && users.Items.Count > 0)
+                    {
+                        int Number = 1;
+                        @foreach (var item in users.Items)
+                        {
+                            <tr>
+                                <th scope="row">@Number</th>
+                                <td>@item.Username</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Role</td>
+                                <td>@item.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@item.CreatedByName</td>
+                                <td class="g-1">
+                                    <a class="btn btn-info btn-sm" href="@($"/users/edit/{item.UserId}")" role="button">
+                                        <i class="bi bi-pencil-square text-white"></i>
+                                    </a>
+
+                                    <a class="btn btn-secondary btn-sm" href="@($"/users/detail/{item.UserId}")" role="button">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            Number++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="text-center p-5 my-5">
+                                    <p class="h5">Mohon maaf, Pencarian tidak ditemukan!</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">
+                            <Spinner />
+                        </td>
+                    </tr>
+                }
+                
+            </tbody>
+        </table>
+    </div>
+    @if (users is not null && (users.Items.Count >= pageSize || currentPage > 1))
+    {
+        <Pagination CurrentPage="currentPage" OnPageChange="OnPageChange" />
+    }
+</Section>
